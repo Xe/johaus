@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-indigo.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <style>
+    .johaus-parser-descr {
+      float: left;
+      padding-left: 5px;
+      padding-top: 10px;
+    }
+    .johaus-parser-toggle-row {
+      display: table-row;
+      float: right;
+      padding-top: 10px;
+    }
+    .johaus-parser-toggle-cell {
+      display: table-cell;
+      padding-right: 50px;
+    }
+    .johaus-parser-textarea {
+      height: 40vh;
+      resize: none;
+    }
+    .johaus-parser-textfield {
+      left: 1%;
+      width: 98%;
+    }
+    .johaus-parser-tree-output {
+      overflow-x: auto;
+      overflow-y: hidden;
+      font-family: monospace;
+      padding-left: 10px;
+      padding-bottom: 50px;
+    }
+    .johaus-parser-brace-output {
+      font-family: monospace;
+      padding-left: 10px;
+      padding-bottom: 50px;
+    }
+    .johaus-parser-error-output {
+      font-family: sans-serif;
+      padding-left: 10px;
+      padding-bottom: 50px;
+    }
+    .mdl-button--fab {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+    }
+  </style>
+  <script>
+    function escapeHtml(str) {
+      return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+    }
+
+    function showResults(tree, braces) {
+      var treePanel = document.getElementById("johaus-parser-tricu-panel")
+      treePanel.innerHTML = "<pre>" + escapeHtml(tree) + "</pre>";
+      var tobuPanel = document.getElementById("johaus-parser-tobu-panel")
+      tobuPanel.innerHTML = "<p>" + escapeHtml(braces) + "</p>";
+      var resultTabs = document.getElementById("johaus-parser-result-tabs");
+      resultTabs.style.display = "block";
+      var errorTabs = document.getElementById("johaus-parser-error-tabs");
+      errorTabs.style.display = "none";
+    }
+
+    function showError(msg) {
+      var errorPanel = document.getElementById("johaus-parser-error-panel");
+      errorPanel.innerHTML = "<p>" + escapeHtml(msg) + "</p>";
+      var resultTabs = document.getElementById("johaus-parser-result-tabs");
+      resultTabs.style.display = "none";
+      var errorTabs = document.getElementById("johaus-parser-error-tabs");
+      errorTabs.style.display = "block";
+
+      var pos = msg.split(":")[1].split(".");
+      var line = parseInt(pos[0]);
+      var col = parseInt(pos[1]);
+      var textArea = document.getElementById("johaus-parser-textarea");
+      var text = textArea.value;
+      var lines = text.split("\n");
+      var offs = 0;
+      for (i = 0; i < Math.min(lines.length, line-1); i++) {
+        offs += lines[i].length;
+      }
+      offs += line - 1; // newlines
+      offs += col - 1; // 0-indexed
+      textArea.selectionStart = offs;
+      textArea.selectionEnd = text.length;
+      textArea.focus();
+    }
+
+    function parse() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState != 4 || this.status != 200) {
+          return;
+        }
+        var resp = JSON.parse(this.responseText);
+        if (typeof(resp.Error) !== 'undefined') {
+          showError(resp.Error);
+          return;
+        }
+        showResults(resp.Tree, resp.Braces);
+      };
+      var terms = document.getElementById("johaus-parser-terminators").checked;
+      var morph = document.getElementById("johaus-parser-morphology").checked;
+      var url = document.URL + "?morph=" + morph + "&terms=" + terms;
+      xhttp.open("POST", url, true);
+      var text = document.getElementById("johaus-parser-textarea").value;
+      xhttp.send(text);      
+    }
+  </script>
+  <title>johaus — {{.Dialect.Name}}</title>
+</head>
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">{{.Dialect.Name}}</span>
+      </div>
+    </header>
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">johaus</span>
+      <nav class="mdl-navigation">
+        {{range $name := .Dialects}}
+        <a class="mdl-navigation__link" href="/{{$name}}">{{$name}}</a>
+        {{end}}
+      </nav>
+    </div>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+         <p class="johaus-parser-descr">
+          {{.Dialect.Descr.jbo}} (to <a href="{{.Dialect.OfficialURL}}">kibystu</a> toi)
+        </p>
+        <div class="johaus-parser-toggle-row">
+          <div class="johaus-parser-toggle-cell">
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="johaus-parser-terminators">
+              <input type="checkbox" id="johaus-parser-terminators" class="mdl-switch__input" checked></input>
+              <span class="mdl-switch__label">famyma'o</span>
+            </label>
+          </div>
+          <div class="johaus-parser-toggle-cell">
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="johaus-parser-morphology">
+              <input type="checkbox" id="johaus-parser-morphology" class="mdl-switch__input"></input>
+              <span class="mdl-switch__label">taiske</span>
+            </label>
+          </div>
+        </div>
+
+        <form action="#">
+          <div class="johaus-parser-textfield mdl-textfield mdl-js-textfield">
+            <textarea class="johaus-parser-textarea mdl-textfield__input" type="text" id="johaus-parser-textarea"></textarea>
+            <label class="mdl-textfield__label" for="uensni">
+              ko batkyci'a su'o uensni ti
+            </label>
+          </div>
+        </form>
+
+        <div style="display: none;" class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" id="johaus-parser-result-tabs">
+        	<div class="mdl-tabs__tab-bar">
+        	    <a href="#johaus-parser-tricu-panel" class="mdl-tabs__tab is-active" id="johaus-parser-tricu-tab">tricu</a>
+        	    <a href="#johaus-parser-tobu-panel" class="mdl-tabs__tab" id="johaus-parser-tobu-tab">tobu</a>
+        	</div>
+        	<div class="johaus-parser-tree-output mdl-tabs__panel is-active" id="johaus-parser-tricu-panel"></div>
+        	<div class="johaus-parser-brace-output mdl-tabs__panel" id="johaus-parser-tobu-panel"></div>
+        </div>
+
+        <div style="display: none;" class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" id="johaus-parser-error-tabs">
+        	<div class="mdl-tabs__tab-bar">
+        	    <a href="#johaus-parser-error-panel" class="mdl-tabs__tab is-active" id="error-tab">se srera</a>
+        	</div>
+               <div class="johaus-parser-error-output mdl-tabs__panel is-active" id="johaus-parser-error-panel"></div>
+        </div>
+
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="parse()">
+          <i class="material-icons">cached</i>
+        </button>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
