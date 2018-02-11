@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"bytes"
@@ -7,7 +7,6 @@ import (
 	"html/template"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -21,10 +20,8 @@ import (
 	_ "github.com/eaburns/johaus/parser/alldialects"
 )
 
-func main() {
+func init() {
 	http.HandleFunc("/", rootHandler)
-	log.Println("serving on port 8888")
-	log.Fatal(http.ListenAndServe(":8888", nil))
 }
 
 func rootHandler(w http.ResponseWriter, req *http.Request) {
@@ -36,7 +33,7 @@ func rootHandler(w http.ResponseWriter, req *http.Request) {
 
 	switch req.Method {
 	case http.MethodGet:
-		t, err := template.ParseGlob("server/*.tmplt")
+		t, err := template.ParseGlob("*.tmplt")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
