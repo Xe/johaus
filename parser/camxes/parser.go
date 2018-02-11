@@ -15,7 +15,7 @@ func init() {
 			Version: "",
 			Descr: map[string]string{
 				"en":  "The camxes implementation of the official Lojban grammar.",
-				"jbo": "la .camxes. cu ralju lo'i bankle be la .lojban.",
+				"jbo": "la .camxes. cu ralju loi bankle be la .lojban.",
 			},
 			OfficialURL: "http://lojban.github.io/ilmentufa/camxes.html",
 			GrammarURL:  "",
