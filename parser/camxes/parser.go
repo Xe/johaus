@@ -4,7 +4,7 @@ package camxes
 //go:generate peggy -o camxes.go camxes.peg
 
 import (
-	"github.com/eaburns/johaus/parser"
+	"github.com/Xe/johaus/parser"
 	"github.com/eaburns/peggy/peg"
 )
 

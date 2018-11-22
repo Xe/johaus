@@ -12,8 +12,8 @@ import (
 	"path"
 	"strings"
 
-	"github.com/eaburns/johaus/parser"
-	"github.com/eaburns/johaus/pretty"
+	"github.com/Xe/johaus/parser"
+	"github.com/Xe/johaus/pretty"
 	"github.com/eaburns/peggy/peg"
 
 	// Register all supported Lojban dialects in init().

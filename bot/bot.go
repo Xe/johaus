@@ -10,8 +10,8 @@ import (
 
 	"context"
 
-	"github.com/eaburns/johaus/parser"
-	"github.com/eaburns/johaus/pretty"
+	"github.com/Xe/johaus/parser"
+	"github.com/Xe/johaus/pretty"
 	prettyprint "github.com/eaburns/pretty"
 	"github.com/velour/chat"
 	"github.com/velour/chat/irc"

@@ -4,7 +4,7 @@ package zantufa
 //go:generate peggy -o zantufa.go zantufa-1.9999.peg
 
 import (
-	"github.com/eaburns/johaus/parser"
+	"github.com/Xe/johaus/parser"
 	"github.com/eaburns/peggy/peg"
 )
 

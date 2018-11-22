@@ -4,7 +4,7 @@ package ilmentufa
 //go:generate peggy -o ilmentufa.go ilmentufa.peg
 
 import (
-	"github.com/eaburns/johaus/parser"
+	"github.com/Xe/johaus/parser"
 	"github.com/eaburns/peggy/peg"
 )
 

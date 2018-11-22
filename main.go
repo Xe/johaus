@@ -8,11 +8,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/eaburns/johaus/parser"
-	"github.com/eaburns/johaus/pretty"
+	"github.com/Xe/johaus/parser"
+	"github.com/Xe/johaus/pretty"
 
 	// Register all supported Lojban dialects in init().
-	_ "github.com/eaburns/johaus/parser/alldialects"
+	_ "github.com/Xe/johaus/parser/alldialects"
 )
 
 var (

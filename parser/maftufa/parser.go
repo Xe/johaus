@@ -4,7 +4,7 @@ package maftufa
 //go:generate peggy -o maftufa.go maftufa.peg
 
 import (
-	"github.com/eaburns/johaus/parser"
+	"github.com/Xe/johaus/parser"
 	"github.com/eaburns/peggy/peg"
 )
 
