@@ -1,4 +1,4 @@
-package server
+package main
 
 import (
 	"bytes"
@@ -22,6 +22,10 @@ import (
 
 func init() {
 	http.HandleFunc("/", rootHandler)
+}
+
+func main() {
+	http.ListenAndServe(":8080", nil)
 }
 
 func rootHandler(w http.ResponseWriter, req *http.Request) {
