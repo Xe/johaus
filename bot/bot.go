@@ -10,14 +10,14 @@ import (
 
 	"context"
 
-	"github.com/Xe/johaus/parser"
-	"github.com/Xe/johaus/pretty"
 	prettyprint "github.com/eaburns/pretty"
 	"github.com/velour/chat"
 	"github.com/velour/chat/irc"
+	"within.website/johaus/parser"
+	"within.website/johaus/pretty"
 
 	// Register all supported dialects.
-	_ "github.com/eaburns/johaus/parser/alldialects"
+	_ "within.website/johaus/parser/alldialects"
 )
 
 var (

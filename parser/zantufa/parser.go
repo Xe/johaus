@@ -4,8 +4,8 @@ package zantufa
 //go:generate peggy -o zantufa.go zantufa-1.9999.peg
 
 import (
-	"github.com/Xe/johaus/parser"
 	"github.com/eaburns/peggy/peg"
+	"within.website/johaus/parser"
 )
 
 func init() {

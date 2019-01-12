@@ -12,12 +12,12 @@ import (
 	"path"
 	"strings"
 
-	"github.com/Xe/johaus/parser"
-	"github.com/Xe/johaus/pretty"
 	"github.com/eaburns/peggy/peg"
+	"within.website/johaus/parser"
+	"within.website/johaus/pretty"
 
 	// Register all supported Lojban dialects in init().
-	_ "github.com/eaburns/johaus/parser/alldialects"
+	_ "within.website/johaus/parser/alldialects"
 )
 
 func init() {

@@ -4,8 +4,8 @@ package ilmentufa
 //go:generate peggy -o ilmentufa.go ilmentufa.peg
 
 import (
-	"github.com/Xe/johaus/parser"
 	"github.com/eaburns/peggy/peg"
+	"within.website/johaus/parser"
 )
 
 func init() {

@@ -3,8 +3,8 @@ package alldialects
 
 // Import all supported parsers for registration.
 import (
-	_ "github.com/Xe/johaus/parser/camxes"
-	_ "github.com/Xe/johaus/parser/ilmentufa"
-	_ "github.com/Xe/johaus/parser/maftufa"
-	_ "github.com/Xe/johaus/parser/zantufa"
+	_ "within.website/johaus/parser/camxes"
+	_ "within.website/johaus/parser/ilmentufa"
+	_ "within.website/johaus/parser/maftufa"
+	_ "within.website/johaus/parser/zantufa"
 )
