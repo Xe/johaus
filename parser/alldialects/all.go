@@ -4,6 +4,7 @@ package alldialects
 // Import all supported parsers for registration.
 import (
 	_ "within.website/johaus/parser/camxes"
+	_ "within.website/johaus/parser/camxes-beta"
 	_ "within.website/johaus/parser/ilmentufa"
 	_ "within.website/johaus/parser/maftufa"
 	_ "within.website/johaus/parser/zantufa"
