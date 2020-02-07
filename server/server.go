@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -14,10 +15,8 @@ import (
 
 	"github.com/eaburns/peggy/peg"
 	"within.website/johaus/parser"
-	"within.website/johaus/pretty"
-
-	// Register all supported Lojban dialects in init().
 	_ "within.website/johaus/parser/alldialects"
+	"within.website/johaus/pretty"
 )
 
 func init() {
@@ -25,7 +24,7 @@ func init() {
 }
 
 func main() {
-	http.ListenAndServe(":8080", nil)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func rootHandler(w http.ResponseWriter, req *http.Request) {
